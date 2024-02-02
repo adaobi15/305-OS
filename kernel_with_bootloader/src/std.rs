@@ -23,7 +23,19 @@ macro_rules! println {
         write!($crate::FRAME_BUFFER_WRITER.lock(), "{}", format_args_nl!($($arg)*)).unwrap();
     }};
 }
+#[macro_export]
+macro_rules! input_str {
+    ($prompt:expr ) =>{{
+       
+        //match input_str(){
+           // Some(value) => value,
+            //None => "".to_owned()
+            print!($prompt);
+            $crate::input_str()
+   
 
+}};
+}
 pub fn input_str() -> Option<String> {
     let mut input: String = "".to_string();
     let mut input_counter:u32 = 0; //keep a count so that backspaced induced pop is not allowed beyond the count

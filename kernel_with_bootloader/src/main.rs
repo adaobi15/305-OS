@@ -14,7 +14,7 @@ use alloc::{borrow::ToOwned, sync::Arc};
 //use bootloader_api::config::Mapping;
 use writer::FrameBufferWriter;
 use x86_64::instructions::hlt;
-
+use alloc::string::String;
 //let's get heap memory allocation going
 extern crate alloc;
 use good_memory_allocator::SpinLockedAllocator;
@@ -153,14 +153,22 @@ fn my_entry_point(boot_info: &'static mut bootloader_api::BootInfo) -> ! {
     interrupts::init();
 
     //Let's experience getting string from keyboard and saving into a variable for use
-    print!("Enter string: ");
+    /*print!("Enter string: ");
     let input = match input_str() {
         Some(value) => value,
         None => "".to_owned()
     };
     println!("\nString entered is '{}'", input);
 
+    input_str();
+*/
+let user_input: Option<String> = input_str!("Enter a string: ");
 
+    if let Some(value) = user_input {
+        println!("\nthe user inputted'{}'", value);
+    } else {
+        println!("\nthere was no input");
+    }
     // invoke a breakpoint exception for test
     //x86_64::instructions::interrupts::int3();
 
